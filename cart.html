@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vegetable Store - Place Order</title>
+    <style>
+        /* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background-image: url("img/cart.jpg");
+    height: 100%; 
+
+/* Center and scale the image nicely */
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: #d3ffd0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-width: 3px;
+    border-radius: 6px;
+    border-color: black;
+    border-style: solid;
+}
+
+h1, h2 {
+    color: #4CAF50;
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.total-price {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.order-summary {
+    background: rgb(212, 255, 209);
+    border-width: 3px;
+    border-radius: 6px;
+    border-color: black;
+    border-style: solid;
+    padding-left: 8px;
+}
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <h1>Place Your Order Here</h1>
+        <form id="orderForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+
+            <label for="product">Select Product:</label>
+            <select id="product" name="product" required>
+                <option value="Tomato" data-price="2.50">Tomato - ₹40.50/kg</option>
+                <option value="Potato" data-price="1.80">Potato - ₹50.80/kg</option>
+                <option value="Onion" data-price="1.20">Onion - ₹60.20/kg</option>
+            </select>
+
+            <label for="quantity">Quantity (in kg):</label>
+            <input type="number" id="quantity" name="quantity" value="1" min="1" required>
+
+            <!-- <div class="total-price">
+                <strong>Total Price: ₹<span id="price">0.50</span></strong>
+            </div> -->
+
+            <button type="submit">Place Order</button>
+        </form>
+
+        <div id="orderSummary" class="order-summary hidden">
+            <h2>Order Summary</h2>
+            <p><strong>Name:</strong> <span id="summaryName"></span></p>
+            <p><strong>Email:</strong> <span id="summaryEmail"></span></p>
+            <p><strong>Phone:</strong> <span id="summaryPhone"></span></p>
+            <p><strong>Product:</strong> <span id="summaryProduct"></span></p>
+            <p><strong>Quantity:</strong> <span id="summaryQuantity"></span> kg</p>
+            <!-- <p><strong>Total Price:</strong> ₹<span id="summaryPrice"></span></p> -->
+        </div>
+    </div>
+    <script>
+        // script.js
+document.addEventListener("DOMContentLoaded", function () {
+    const productSelect = document.getElementById("product");
+    const quantityInput = document.getElementById("quantity");
+    const priceDisplay = document.getElementById("price");
+    const orderForm = document.getElementById("orderForm");
+    const orderSummary = document.getElementById("orderSummary");
+
+    const summaryName = document.getElementById("summaryName");
+    const summaryEmail = document.getElementById("summaryEmail");
+    const summaryPhone = document.getElementById("summaryPhone");
+    const summaryProduct = document.getElementById("summaryProduct");
+    const summaryQuantity = document.getElementById("summaryQuantity");
+    const summaryPrice = document.getElementById("summaryPrice");
+
+    function updatePrice() {
+        const selectedOption = productSelect.options[productSelect.selectedIndex];
+        const productPrice = parseFloat(selectedOption.getAttribute("data-price"));
+        const quantity = parseInt(quantityInput.value) || 1;
+
+        const totalPrice = (productPrice * quantity).toFixed(2);
+        priceDisplay.textContent = totalPrice;
+    }
+
+    productSelect.addEventListener("change", updatePrice);
+    quantityInput.addEventListener("input", updatePrice);
+
+    orderForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent form from refreshing the page
+
+        // Fill the order summary
+        summaryName.textContent = document.getElementById("name").value;
+        summaryEmail.textContent = document.getElementById("email").value;
+        summaryPhone.textContent = document.getElementById("phone").value;
+        summaryProduct.textContent = productSelect.options[productSelect.selectedIndex].value;
+        summaryQuantity.textContent = quantityInput.value;
+        summaryPrice.textContent = priceDisplay.textContent;
+
+        // Show the order summary
+        orderSummary.classList.remove("hidden");
+
+        // Optionally clear the form
+        orderForm.reset();
+        priceDisplay.textContent = "50.50"; // Reset to default price
+    });
+});
+
+    </script>
+</body>
+</html>

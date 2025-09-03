@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Product Adding Page</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-image: url("img/bg.jpeg");
+height: 100%; 
+
+/* Center and scale the image nicely */
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #d3ffd0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #4CAF50;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+fieldset {
+    border: 2px solid #000000;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    padding: 15px;
+}
+
+legend {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+label {
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+input, select {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+}
+
+button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.message {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f0f8ff;
+    border: 1px solid #000000;
+    color: #000000;
+    border-radius: 5px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Farmer Product Adding Page</h1>
+
+        <form id="farmer-form">
+            <!-- Farmer Details -->
+            <fieldset>
+                <legend style="color: #000000;">Farmer Details</legend>
+                <label for="farmer-name">Farmer Name:</label>
+                <input type="text" id="farmer-name" name="farmer-name" required>
+
+                <label for="farmer-contact">Contact Number:</label>
+                <input type="text" id="farmer-contact" name="farmer-contact" required pattern="^\d{10}$" title="Enter a valid 10-digit number">
+
+                <label for="farmer-location">Location:</label>
+                <input type="text" id="farmer-location" name="farmer-location" required>
+            </fieldset>
+
+            <!-- Product Details -->
+            <fieldset>
+                <legend>Product Details</legend>
+                <label for="product-name">Product Name:</label>
+                <input type="text" id="product-name" name="product-name" required>
+
+                <label for="product-quantity">Quantity (in kg):</label>
+                <input type="number" id="product-quantity" name="product-quantity" required min="1">
+
+                <label for="product-price">Price per kg:</label>
+                <input type="number" id="product-price" name="product-price" required min="50" step="">
+
+                <label for="product-category">Category:</label>
+                <select id="product-category" name="product-category" required>
+                    <option value="">Select Category</option>
+                    <option value="vegetables">Vegetables</option>
+                    <option value="fruits">Fruits</option>
+                    <option value="grains">Grains</option>
+                    <option value="dairy">Dairy</option>
+                </select>
+            </fieldset>
+
+            <!-- Submit Button -->
+            <button type="submit">Add Product</button>
+        </form>
+
+        <!-- Message Area -->
+        <div id="message" class="message"></div>
+    </div>
+
+    <script >
+        document.getElementById('farmer-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission to simulate the process
+
+    // Collect form data
+    const farmerName = document.getElementById('farmer-name').value;
+    const farmerContact = document.getElementById('farmer-contact').value;
+    const farmerLocation = document.getElementById('farmer-location').value;
+    const productName = document.getElementById('product-name').value;
+    const productQuantity = document.getElementById('product-quantity').value;
+    const productPrice = document.getElementById('product-price').value;
+    const productCategory = document.getElementById('product-category').value;
+
+    // Validate if any required field is missing
+    if (!farmerName || !farmerContact || !farmerLocation || !productName || !productQuantity || !productPrice || !productCategory) {
+        document.getElementById('message').textContent = "Please fill out all fields.";
+        document.getElementById('message').style.backgroundColor = "#f8d7da";
+        document.getElementById('message').style.color = "#721c24";
+        return;
+    }
+
+    // Display success message
+    document.getElementById('message').textContent = `Product added successfully!
+    Farmer: ${farmerName} |Product: ${productName} | Quantity: ${productQuantity} kg | Price: ₹${productPrice} per kg`;
+    document.getElementById('message').style.backgroundColor = "#d4edda";
+    document.getElementById('message').style.color = "#155724";
+
+    // Optionally, clear the form after submission
+    document.getElementById('farmer-form').reset();
+});
+
+    </script>
+</body>
+</html>
